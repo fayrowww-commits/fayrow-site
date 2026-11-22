@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Muhammad — FAYROW</title>
+  <meta name="description" content="Muhammad (FAYROW) — Discord bot & website developer.">
+  <meta name="theme-color" content="#07070d">
+  <script>
+    // set theme before first paint (no flash)
+    try { var t = JSON.parse(localStorage.getItem('fy_theme')); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&family=Unbounded:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading" data-bg="aurora">
+
+  <!-- ===== Loader ===== -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <h1 class="loader-title">
+        <span style="--i:0">F</span><span style="--i:1">A</span><span style="--i:2">Y</span><span style="--i:3">R</span><span style="--i:4">O</span><span style="--i:5">W</span>
+      </h1>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-pct">0%</div>
+    </div>
+  </div>
+
+  <!-- ===== Background ===== -->
+  <div id="bg" aria-hidden="true">
+    <div class="aurora"><i></i><i></i><i></i></div>
+    <canvas id="bgCanvas"></canvas>
+    <div class="bg-blur"></div>
+    <div class="bg-grain"></div>
+  </div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+
+  <!-- ===== Top bar ===== -->
+  <nav class="nav" aria-label="Main">
+    <i class="nav-pill"></i>
+    <a href="#home" data-sec="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg><span data-i18n="nav.home">Home</span></a>
+    <a href="#about" data-sec="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg><span data-i18n="nav.about">About</span></a>
+    <a href="#skills" data-sec="skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4.5 4L8 16M16 8l4.5 4L16 16M13.5 5.5l-3 13"/></svg><span data-i18n="nav.skills">Skills</span></a>
+    <a href="#contact" data-sec="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10.5H9.5L5 19.5V16H4z"/></svg><span data-i18n="nav.contact">Contact</span></a>
+  </nav>
+
+  <header class="topbar">
+    <a class="logo" href="#home" aria-label="FAYROW">FAYROW<span>.</span></a>
+
+    <div class="controls">
+      <div class="lang" role="group" aria-label="Language">
+        <i class="pill"></i>
+        <button data-lang="en">EN</button>
+        <button data-lang="ru">RU</button>
+        <button data-lang="uz">UZ</button>
+      </div>
+
+      <button class="icon-btn" id="themeBtn" data-i18n-title="ui.theme" title="Toggle theme" aria-label="Toggle theme">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+      </button>
+
+      <button class="icon-btn" id="musicBtn" data-i18n-title="ui.music" title="Music" aria-label="Music" aria-pressed="false">
+        <span class="eq"><i></i><i></i><i></i><i></i></span>
+      </button>
+
+      <button class="icon-btn" id="settingsBtn" data-i18n-title="ui.settings" title="Settings" aria-label="Settings" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Settings panel ===== -->
+  <aside class="settings" id="settingsPanel" aria-label="Settings">
+    <h3 data-i18n="settings.title">Appearance</h3>
+
+    <div class="s-row">
+      <label data-i18n="settings.bg">Background</label>
+      <div class="seg" id="bgSeg">
+        <button data-bg="aurora"><span data-i18n="settings.aurora">Aurora</span></button>
+        <button data-bg="particles"><span data-i18n="settings.particles">Particles</span></button>
+        <button data-bg="stars"><span data-i18n="settings.stars">Stars</span></button>
+        <button data-bg="off"><span data-i18n="settings.off">Off</span></button>
+      </div>
+    </div>
+
+    <div class="s-row">
+      <label><span data-i18n="settings.blur">Background blur</span> <b id="blurVal">0</b></label>
+      <input type="range" id="blurRange" min="0" max="30" step="1" value="0">
+    </div>
+
+    <div class="s-row">
+      <label><span data-i18n="settings.volume">Music volume</span> <b id="volVal">35</b></label>
+      <input type="range" id="volRange" min="0" max="100" step="1" value="35">
+    </div>
+  </aside>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section id="home" class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <span class="eyebrow rv" style="--d:.05s"><i></i><span data-i18n="hero.eyebrow">Developer</span></span>
+          <h1 class="rv" style="--d:.15s">
+            <span class="hi" data-i18n="hero.hi">Hi, I’m</span>
+            <span class="name" id="heroName">Muhammad</span>
+          </h1>
+          <p class="tagline rv" style="--d:.28s" data-i18n="hero.tagline"></p>
+
+          <div class="cta rv" style="--d:.4s">
+            <a class="btn primary" href="#contact">
+              <span data-i18n="hero.cta1">Get in touch</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn ghost" href="#about"><span data-i18n="hero.cta2">More about me</span></a>
+          </div>
+
+          <div class="meta rv" style="--d:.5s">
+            <span class="chip"><i class="dot"></i><span data-i18n="hero.time">Local time</span><b id="clock">--:--:--</b></span>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <!-- Discord profile card -->
+          <article class="pcard rv" id="pcard" style="--d:.3s" data-status="">
+            <div class="banner" id="banner">
+              <span class="live"><i></i><span data-i18n="card.live">Synced with Discord</span></span>
+            </div>
+            <div class="avatar-wrap">
+              <span class="avatar-ring"></span>
+              <div class="avatar" id="avatar"><span class="avatar-fallback" id="avatarFallback">M</span></div>
+              <span class="status-dot" id="statusDot"></span>
+            </div>
+            <div class="pbody">
+              <div class="pname" id="dName">Muhammad</div>
+              <div class="puser" id="dUser">@fayrow</div>
+              <div class="pstatus" id="dStatus"></div>
+              <div class="tags">
+                <span class="tag" data-i18n="card.tag1">Bot developer</span>
+                <span class="tag" data-i18n="card.tag2">Web developer</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Typing code window -->
+          <div class="code rv" style="--d:.45s">
+            <div class="code-bar"><i></i><i></i><i></i><span>me.js</span></div>
+            <pre id="code" aria-label="profile"></pre>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-hint" href="#about" aria-label="Scroll"><i></i></a>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <span class="idx">01 /</span>
+          <h2 data-i18n="about.title">About me</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text rv">
+            <p data-i18n="about.p1"></p>
+            <p data-i18n="about.p2"></p>
+          </div>
+
+          <div class="stats">
+            <div class="stat spot rv" style="--d:.05s">
+              <div class="num"><span class="count" id="statYears" data-to="2">0</span><em>+</em></div>
+              <div class="lbl" data-i18n="about.years">Years of coding</div>
+            </div>
+            <div class="stat spot rv" style="--d:.15s">
+              <div class="num"><span class="count" id="statProjects" data-to="10">0</span><em>+</em></div>
+              <div class="lbl" data-i18n="about.projects">Projects shipped</div>
+            </div>
+            <div class="stat spot rv" style="--d:.25s">
+              <div class="num"><span class="count" data-to="3">0</span></div>
+              <div class="lbl" data-i18n="about.langs">Site languages</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <span class="idx">02 /</span>
+          <h2 data-i18n="skills.title">What I do</h2>
+        </div>
+
+        <div class="cards3">
+          <article class="card spot rv" style="--d:.05s">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13.2v.1M15 13.2v.1M9.5 16.5h5"/><circle cx="12" cy="3.5" r="1"/></svg></div>
+            <h3 data-i18n="skills.c1t">Discord bots</h3>
+            <p data-i18n="skills.c1d"></p>
+          </article>
+          <article class="card spot rv" style="--d:.15s">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M7 6.8h.1M10 6.8h.1"/><path d="m10 14-2 1.5 2 1.5M14 14l2 1.5-2 1.5"/></svg></div>
+            <h3 data-i18n="skills.c2t">Websites</h3>
+            <p data-i18n="skills.c2d"></p>
+          </article>
+          <article class="card spot rv" style="--d:.25s">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z"/></svg></div>
+            <h3 data-i18n="skills.c3t">Backend & automation</h3>
+            <p data-i18n="skills.c3d"></p>
+          </article>
+        </div>
+
+        <div class="marquee rv" id="marquee" aria-hidden="true"><div class="track"></div></div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <span class="idx">03 /</span>
+          <h2 data-i18n="contact.title">Contact</h2>
+        </div>
+        <p class="contact-sub rv" data-i18n="contact.sub"></p>
+
+        <div class="cards3 contacts">
+          <a class="card contact spot rv c-discord" id="cDiscord" href="#" target="_blank" rel="noopener" style="--d:.05s">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5.8c3-1.4 7-1.4 10 0 2 1 3.5 4.4 4 9-1.5 1.4-3.2 2.2-5 2.6l-1-1.8c-1.3.3-2.7.3-4 0l-1 1.8c-1.8-.4-3.5-1.2-5-2.6.5-4.6 2-8 4-9z"/><circle cx="9.3" cy="12" r="1.2"/><circle cx="14.7" cy="12" r="1.2"/></svg></div>
+            <div class="c-info">
+              <span class="c-label" data-i18n="contact.discord">Discord</span>
+              <span class="c-handle" id="hDiscord">fayroww</span>
+            </div>
+            <button class="copy" id="copyDiscord" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg></button>
+          </a>
+
+          <a class="card contact spot rv c-insta" id="cInsta" href="#" target="_blank" rel="noopener" style="--d:.15s">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></div>
+            <div class="c-info">
+              <span class="c-label" data-i18n="contact.instagram">Instagram</span>
+              <span class="c-handle" id="hInsta">@fayrowww</span>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+
+          <a class="card contact spot rv c-tg" id="cTg" href="#" target="_blank" rel="noopener" style="--d:.25s">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3 2.5 10.4l6.3 2.3 2.4 6.8 3.4-4.2 4.8 3.5z"/><path d="m8.8 12.7 12.7-9.7"/></svg></div>
+            <div class="c-info">
+              <span class="c-label" data-i18n="contact.telegram">Telegram</span>
+              <span class="c-handle" id="hTg">@muxammad4k</span>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap foot">
+      <span>© <span id="year"></span> FAYROW · <span data-i18n="footer.made">Made with</span> <span class="heart">♥</span></span>
+      <a href="#home" class="to-top"><span data-i18n="footer.top">Back to top</span> ↑</a>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
